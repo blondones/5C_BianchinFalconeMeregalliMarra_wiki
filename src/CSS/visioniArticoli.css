@@ -28,3 +28,34 @@ body {
     text-decoration: none;
     color: #000;
 }
+
+.scrittaLogin{
+    color:grey;
+    font-size: smaller;
+    font-family: 'Lemon Tuesday', cursive;
+    text-align: center;
+}
+
+.inputLogin{
+    width: 30%;
+    padding: 10px;
+    margin: 5px 35%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: left;
+}
+#bottoneLogin{
+    background-color: #2e37be;
+    color: white;
+    width: 15%;
+    padding: 10px;
+    margin: 5px 35%;
+    border-radius: 5px;
+    border: 1px;
+}
+#scrittaRegister{
+    text-align: center;
+    width: 80%;
+    font-size:medium;
+    margin-top: 5%;
+}

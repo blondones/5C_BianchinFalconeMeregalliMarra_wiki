@@ -106,3 +106,37 @@ button:hover {
 .user-area input:focus {
     border-color: #2e37be;  
 }
+
+#scrittaReviewEffettiva {
+    text-align: center;
+    width: 90%;
+    font-size: xx-large;
+    margin-top: 5%;
+}
+#immagineVarano{
+    width: 20%;
+    height: 10%;
+    margin-right: 5%;
+    margin-top: -5%;
+    float: right;
+}
+#immagineVarano2{
+    width: 20%;
+    height: 10%;
+    margin-left: 5%;
+    float: left;
+}
+#testoReview1{
+    text-align: left;
+    width: 60%;
+    font-size: x-large;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+#testoReview2{
+    text-align: left;
+    width: 60%;
+    font-size: x-large;
+    margin-top: 2%;
+    margin-left: 30%;
+}

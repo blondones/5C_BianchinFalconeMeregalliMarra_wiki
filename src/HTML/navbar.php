@@ -9,8 +9,10 @@
             <li><a href="../HTML/login.php">Area Utente</a></li>
         </ul>
         <div class="user-area">
-            <input type="text" placeholder="Search...">
-            <img src="../../data/search.png" alt="">
+            <form action="opzioniRicerca.php" method="POST">
+                <input type="text" id="search" name="search" placeholder="Search...">
+                <button type="submit"><img src="../../data/search.png" alt=""></button>
+            </form>
         </div>
     </nav>
 </div>

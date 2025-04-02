@@ -14,7 +14,7 @@
     ?>
 
     <!--NAVBAR-->
-    <div id="navbar-container"></div>
+    <div id="navbar-container" data-navbar=""></div>
 
     <h1 id="scrittaAreaPersonale">Benvenuto <?php 
         $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);

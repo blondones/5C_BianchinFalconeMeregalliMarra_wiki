@@ -8,7 +8,7 @@
 </head>
 <body>
     <!--NAVBAR-->
-    <div id="navbar-container" data-navbar="navbar-welcome"></div>
+    <div id="navbar-container" data-navbar="navbar-logout-WR"></div>
 
 
     <h1>Article List</h1>

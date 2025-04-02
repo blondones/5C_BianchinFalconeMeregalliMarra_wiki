@@ -9,7 +9,7 @@
 
 <body>
     <!--NAVBAR-->
-    <div id="navbar-container"></div>
+    <div id="navbar-container" data-navbar="navbar-empty"></div>
     
     <?php
         session_start();

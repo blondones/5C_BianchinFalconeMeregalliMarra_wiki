@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modify Article</title>
+    <title>Create Article</title>
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
 
 <body>
-    <div id="navbar-container" data-navbar="navbar-welcome"></div>
+    <div id="navbar-container" data-navbar="navbar-logout-WR"></div>
 
     <div class="container">
         <label for="title">Title:</label>

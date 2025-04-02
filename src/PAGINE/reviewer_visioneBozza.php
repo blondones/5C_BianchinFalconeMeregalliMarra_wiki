@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
-    <div id="navbar-container" data-navbar="navbar-welcome"></div>
+    <div id="navbar-container" data-navbar="navbar-logout-RW"></div>
 
     
 

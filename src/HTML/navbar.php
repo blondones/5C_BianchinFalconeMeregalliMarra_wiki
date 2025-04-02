@@ -17,6 +17,7 @@
     </nav>
 </div>
 
+
 <!-- Navbar con logOut -->
 <div id="navbar-logout" style="display: none;">
     <nav class="navbar">

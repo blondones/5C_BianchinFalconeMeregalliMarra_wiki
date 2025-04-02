@@ -199,9 +199,7 @@ p {
     margin-left: 30%;
 }
 
-#bottoneApprovazione{
-    
-}
-#bottoneReject{
-    
+.button-container {
+    display:flex;
+    justify-content: center;
 }

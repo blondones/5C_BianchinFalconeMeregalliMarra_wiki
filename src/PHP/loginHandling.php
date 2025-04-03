@@ -56,16 +56,16 @@
                 $_SESSION["user_id"] = $row["ID"];
                 echo "Utente trovato.."; 
                 $DB->closeConnection();
-                redirect("areapersonale.html"); 
+                redirect("../PHP/areapersonale.html"); 
             } else {
                 echo "Utente non trovato. Riprovare..";
                 $DB->closeConnection();
-                redirect("/src/PAGINE/login.php");
+                redirect("../PAGINE/login.php");
             }
 
         } else {
             echo "Input non valido..";
-            redirect("/src/PAGINE/login.php");
+            redirect("../PAGINE/login.php");
         }
 
     ?>

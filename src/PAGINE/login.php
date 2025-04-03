@@ -21,7 +21,7 @@
 
         if (isset($_SESSION["user_id"])) {
             echo "Già loggato.."; 
-            redirect("../PHP/areapersonale.php");
+            redirect("../PAGINE/areapersonale.php");
         } else {
     ?>
 

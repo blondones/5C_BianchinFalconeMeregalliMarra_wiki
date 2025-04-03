@@ -56,7 +56,7 @@
                 $_SESSION["user_id"] = $row["ID"];
                 echo "Utente trovato.."; 
                 $DB->closeConnection();
-                redirect("../PHP/areapersonale.html"); 
+                redirect("../PAGINE/areapersonale.php"); 
             } else {
                 echo "Utente non trovato. Riprovare..";
                 $DB->closeConnection();

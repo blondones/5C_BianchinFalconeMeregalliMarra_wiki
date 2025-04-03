@@ -13,6 +13,12 @@
     
     <?php
         session_start();
+
+        function redirect($url) {
+            header('Location: '.$url);
+            die();
+        }
+
         if (isset($_SESSION["user_id"])) {
             echo "Già loggato.."; 
             redirect("areapersonale.php");
@@ -22,14 +28,14 @@
     <!--LOGIN-->
     <div id="loginContainer">
         <h1>LOGIN</h1>
-        <form id="formLogin" action="/src/PHP/loginHandling.php" method="POST">
+        <form id="formLogin" action="../PHP/loginHandling.php" method="POST">
             <label for="email" class="scrittaLogin">email</p>
             <input type="text" class="inputLogin" id="email" name="email" placeholder="Inserisci la tua email" required>
             <label for= "password" class="scrittaLogin">password</p>
             <input type="password" class="inputLogin" id="password" name="password" placeholder="Inserisci la tua password" required>
             <button id="bottoneLogin" type="submit">Login</button>
         </form>
-        <p id="scrittaRegister">Vuoi Aiutarci? Clicca <a href="DAINSERIRE.html">qui!</a></p>
+        <p id="scrittaRegister">Vuoi Aiutarci? Clicca qui. <a href="DAINSERIRE.html">qui!</a></p>
     </div>
 
     <?php

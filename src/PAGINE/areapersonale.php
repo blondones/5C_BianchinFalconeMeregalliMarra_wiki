@@ -9,8 +9,8 @@
 <body>
     <?php 
         session_start(); 
-        //require("config.php");
-        //require("database.php");
+        require("../PHP/config.php");
+        require("../PHP/database.php");
     ?>
 
     <!--NAVBAR-->
@@ -18,11 +18,12 @@
 
     <h1 id="scrittaAreaPersonale">Benvenuto <?php 
         $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
-        print_r($DB->getRole($_SESSION["user_id"]));
+        $result = $DB->getRole($_SESSION["user_id"]);
+        print_r($result->fetch_assoc()["Ruolo"]);
         $DB->closeConnection();
     ?></h1> 
 
-    <a href=logout.php> logout</a>
+    <a href="../PHP/logout.php"> logout</a>
 
     <script src="../JS/navbar.js"></script>
 </body>

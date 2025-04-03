@@ -60,12 +60,12 @@
             } else {
                 echo "Utente non trovato. Riprovare..";
                 $DB->closeConnection();
-                redirect("/src/HTML/login.php");
+                redirect("/src/PAGINE/login.php");
             }
 
         } else {
             echo "Input non valido..";
-            redirect("/src/HTML/login.php");
+            redirect("/src/PAGINE/login.php");
         }
 
     ?>

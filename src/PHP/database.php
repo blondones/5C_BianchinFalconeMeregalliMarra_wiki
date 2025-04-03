@@ -41,23 +41,26 @@ class Database {
         $stmt = $this->conn->prepare("SELECT ID FROM Utente WHERE Email = ? AND Password = ?");
         $stmt->bind_param("ss", $email, $password);
         $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($stmt->get_result()->num_rows == 0) {
-            return $stmt->get_result();
+        if ($result->num_rows == 1) {
+            return $result;
         }
         return false;
     }
 
     //Get the role of the user
     public function getRole($ID) {
-        $stmt = $this->conn->prepare("SELECT ruolo FROM Utente (JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente) JOIN Ruolo ON Ruolo.ID = UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?");
+        //"SELECT ruolo FROM Utente (JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente) JOIN Ruolo ON Ruolo.ID = UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?;"
+        $stmt = $this->conn->prepare("SELECT Ruolo.Ruolo FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?;");
         $stmt->bind_param("i", $ID);
         $stmt->execute();
-
-        if ($stmt->get_result()->num_rows > 0) {
-            return $stmt->get_result();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result;
         }
-        return false;
+        return $result->num_rows;
     }
 }
 

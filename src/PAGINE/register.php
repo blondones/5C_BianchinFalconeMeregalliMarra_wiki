@@ -14,8 +14,7 @@
     <!--REGISTER-->
     <div id="register-container">
         <h1>REGISTER</h1>
-        <form id="formRegister" action="" method="POST">
-            
+        <form id="formRegister" action="../PHP/registerHandling.php" method="POST">
             <input type="text" class="inputLogin" id="inputNome" placeholder="Inserisci la tuo nome" required> <!-- inserimento nome -->
             <input type="email" class="inputLogin" id="inputEmail" placeholder="Inserisci la tua email" required> <!-- inserimento email -->
             <input type="password" class="inputLogin" id="password" placeholder="Inserisci la tua password" required> <!-- inserimento password -->

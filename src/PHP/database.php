@@ -5,7 +5,7 @@ class Database {
     //
     //  Vars
     //
-    private static $id;
+    private static $id = 2;
     private $conn;
 
     //
@@ -29,11 +29,18 @@ class Database {
     }
 
     //Adds a user to the DB
-    public function addUser($email, $password) {
+    public function addUser($email, $password, $ruolo) {
         $stmt = $this->conn->prepare("INSERT INTO Utente (ID, Password, Email) VALUES (?, ?, ?);");
         $stmt->bind_param("iss", $this->id, $email, $password);
         $stmt->execute();
-        return $stmt->get_result();
+
+        $stmt = $this->conn->prepare("INSERT INTO UtenteRuolo (ID_Utente, ID_Ruolo) VALUES (?, (SELECT Ruoli.ID FROM Ruoli WHERE Ruoli.Ruoli = ?));");
+        $stmt->bind_param("ii", $this->id, $ruolo);
+        $stmt->execute();
+        
+        $this->id+=1;
+
+        return true;
     }
         
     //Check if the user exists
@@ -51,7 +58,6 @@ class Database {
 
     //Get the role of the user
     public function getRole($ID) {
-        //"SELECT ruolo FROM Utente (JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente) JOIN Ruolo ON Ruolo.ID = UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?;"
         $stmt = $this->conn->prepare("SELECT Ruolo.Ruolo FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?;");
         $stmt->bind_param("i", $ID);
         $stmt->execute();
@@ -61,6 +67,11 @@ class Database {
             return $result;
         }
         return $result->num_rows;
+    }
+
+    //Get Articles
+    public function getArticles($title) {
+        
     }
 }
 

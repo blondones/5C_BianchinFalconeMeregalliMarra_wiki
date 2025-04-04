@@ -35,7 +35,7 @@
             <input type="password" class="inputLogin" id="password" name="password" placeholder="Inserisci la tua password" required>
             <button id="bottoneLogin" type="submit">Login</button>
         </form>
-        <p id="scrittaRegister">Vuoi Aiutarci? Clicca qui. <a href="DAINSERIRE.html">qui!</a></p>
+        <p id="scrittaRegister">Vuoi Aiutarci? Clicca qui. <a href="../PAGINE/register.php">qui!</a></p>
     </div>
 
     <?php

@@ -62,9 +62,33 @@ class Database {
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    //Get the role of the user
+    public function getRole($ID) {
+        $stmt = $this->conn->prepare("SELECT Ruolo.Ruolo FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?;");
+        $stmt->bind_param("i", $ID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+        return false;
+    }
+
+>>>>>>> 241f00271e66a8a844eccabf2250e53d2a896d85
     //Get Articles
     public function getArticles($title) {
+        $stmt = $this->conn->prepare("SELECT titolo FROM bozza WHERE LIKE(?)");
+        $stmt->bind_param("s", $title."*");
+        $stmt->execute();
+        $result = $stmt->get_result();
         
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+        return false;
     }
 }
 

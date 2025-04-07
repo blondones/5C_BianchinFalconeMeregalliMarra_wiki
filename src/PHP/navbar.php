@@ -1,7 +1,7 @@
 <!--ADMIN-->
 
 <!-- Navbar con ricerca -->
-<div id="navbar-search" style="display: none;">
+<div id="navbar-search-admin" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -20,7 +20,7 @@
 </div>
 
 <!-- Navbar con logOut -->
-<div id="navbar-logout" style="display: none;">
+<div id="navbar-logout-admin" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -36,7 +36,7 @@
 </div>
 
 <!-- Navbar con Saluto -->
-<div id="navbar-welcome" style="display: none;">
+<div id="navbar-welcome-admin" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -53,7 +53,7 @@
 
 
 <!-- Navbar vuota -->
-<div id="navbar-empty" style="display: none;">
+<div id="navbar-empty-admin" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -68,7 +68,7 @@
 
 <!-- Navbar Scrittore , reviewer no--> 
 <!-- Navbar con logOut -->
-<div id="navbar-logout-WR" style="display: none;">
+<div id="navbar-logout-writer" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -87,7 +87,7 @@
 
 <!-- Navbar Reviewer, scrittore no -->
 <!-- Navbar con logOut -->
-<div id="navbar-logout-RW" style="display: none;">
+<div id="navbar-logout-reviewer" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -109,7 +109,7 @@
 
 <!-- Navbar User, tutti no -->
 <!-- Navbar con ricerca -->
-<div id="navbar-search-UR" style="display: none;">
+<div id="navbar-search-user" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">
@@ -129,7 +129,7 @@
 
 
 <!-- Navbar vuota -->
-<div id="navbar-empty-UR" style="display: none;">
+<div id="navbar-empty-user" style="display: none;">
     <nav class="navbar">
         <div class="logo">WIKI</div>
         <ul class="nav-links">

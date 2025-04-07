@@ -7,7 +7,7 @@
             
             // destroy the session
             session_destroy();
-            header('Location: visionearticoli.php') ;
+            header('Location: ../PAGINE/home.php') ;
         ?>
     </body>
 </html>

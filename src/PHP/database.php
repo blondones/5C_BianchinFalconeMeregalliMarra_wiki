@@ -30,8 +30,9 @@ class Database {
 
     //Adds a user to the DB
     public function addUser($email, $password, $ruolo) {
-        $stmt = $this->conn->prepare("INSERT INTO Utente (ID, Password, Email) VALUES (?, ?, ?);");
-        $stmt->bind_param("iss", $this->id, $email, $password);
+        $stmt = $this->conn->prepare("INSERT INTO Utente (ID, Email, Password, Stato) VALUES (?, ?, ?, ?);");
+        $state = 0;
+        $stmt->bind_param("iss", $this->id, $password, $email, $state);
         $stmt->execute();
 
         $stmt = $this->conn->prepare("INSERT INTO UtenteRuolo (ID_Utente, ID_Ruolo) VALUES (?, (SELECT Ruoli.ID FROM Ruoli WHERE Ruoli.Ruoli = ?));");
@@ -42,10 +43,15 @@ class Database {
 
         return true;
     }
+
+    //Accept user
+    public function acceptUser() {
         
-    //Check if the user exists
+    }
+        
+    //Check if the user exists, and returns it's Roll and ID
     public function checkUser($email, $password) {
-        $stmt = $this->conn->prepare("SELECT ID FROM Utente WHERE Email = ? AND Password = ?");
+        $stmt = $this->conn->prepare("SELECT Utente.ID, Ruolo.Ruolo FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.Email = ? AND Utente.Password = ?");
         $stmt->bind_param("ss", $email, $password);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -56,23 +62,10 @@ class Database {
         return false;
     }
 
-    //Get the role of the user
-    public function getRole($ID) {
-        $stmt = $this->conn->prepare("SELECT Ruolo.Ruolo FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.ID = ?;");
-        $stmt->bind_param("i", $ID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            return $result;
-        }
-        return $result->num_rows;
-    }
-
     //Get Articles
     public function getArticles($title) {
         
     }
 }
 
-?>
+?>registerHandling

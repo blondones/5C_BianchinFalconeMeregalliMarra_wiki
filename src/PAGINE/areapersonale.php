@@ -9,19 +9,12 @@
 <body>
     <?php 
         session_start(); 
-        require("../PHP/config.php");
-        require("../PHP/database.php");
     ?>
 
     <!--NAVBAR-->
-    <div id="navbar-container" data-navbar=""></div>
+    <div id="navbar-container" data-navbar="navbar-logout-<?php echo $_SESSION["user_role"]; ?>"></div>
 
-    <h1 id="scrittaAreaPersonale">Benvenuto <?php 
-        $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
-        $result = $DB->getRole($_SESSION["user_id"]);
-        print_r($result->fetch_assoc()["Ruolo"]);
-        $DB->closeConnection();
-    ?></h1> 
+    <h1 id="scrittaAreaPersonale">Benvenuto <?php echo $_SESSION["user_role"]; ?></h1> 
 
     <a href="../PHP/logout.php"> logout</a>
 

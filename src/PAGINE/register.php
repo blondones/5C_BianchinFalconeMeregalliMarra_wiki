@@ -19,10 +19,12 @@
             <input type="email" class="inputLogin" id="inputEmail" placeholder="Inserisci la tua email" required> <!-- inserimento email -->
             <input type="password" class="inputLogin" id="password" placeholder="Inserisci la tua password" required> <!-- inserimento password -->
             <input type="password" class="inputLogin" id="confermaPassword" placeholder="Conferma la tua password" required> <!-- conferma password -->
-            <button id="bottoneWriter" type="submit">Register as Writer</button>
-            <button id="bottoneRegister" type="submit">Register as Reviewer</button>
+            <label for="writer" id="write">Writer: </label>
+            <input type="checkbox" class="inputLogin" id="writer" required>
+            <label for="reviewer" id="write">Reviewer: </label>
+            <input type="checkbox" class="inputLogin" id="reviewer" required>
+            <button id="submitRegister" type="submit">Submit</button>
         </form>
-
     </div>
 
 

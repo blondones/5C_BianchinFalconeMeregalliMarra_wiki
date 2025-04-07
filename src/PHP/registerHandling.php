@@ -21,7 +21,6 @@
         //
         // Register Handling
         //
-
         
         $err=false;
         if(empty($_POST["email"]) || empty($_POST["password"])){
@@ -33,7 +32,9 @@
 
         if (!$err) {
             
-            
+            $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
+
+            $result = $DB->addUser($email, $pwd, );
 
         }
 

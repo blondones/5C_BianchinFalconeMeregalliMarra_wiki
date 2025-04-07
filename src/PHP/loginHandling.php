@@ -54,6 +54,7 @@
             if($result != false) {
                 $row = $result->fetch_assoc();  
                 $_SESSION["user_id"] = $row["ID"];
+                $_SESSION["user_role"] = $row["Ruolo"];
                 echo "Utente trovato.."; 
                 $DB->closeConnection();
                 redirect("../PAGINE/areapersonale.php"); 

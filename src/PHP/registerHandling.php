@@ -2,6 +2,13 @@
 
     session_start();
 
+    //
+    // Import
+    //
+
+    require("config.php");
+    require("database.php");
+
     function redirect($url)
     {
         header('Location: ' . $url);
@@ -21,9 +28,14 @@
     //
 
     $err = false;
+    
     if (empty($_POST["email"]) || empty($_POST["password"])) { //Forse mettere controllo su $_POST["writer"]/$_POST["reviewer"]
+        
+        echo "hahaha";
         $err = true;
+
     } else {
+
         $email = test_input($_POST["email"]);
         $pwd = test_input($_POST["password"]);
         $role = "";
@@ -35,10 +47,11 @@
     }
 
     if (!$err) {
-
+        
         $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
-        $DB->addUser($email, $pwd, $role);
 
+        $DB->addUser($email, $pwd, $role);
+        
         redirect("../PAGINE/home.php");
 
     } else {
@@ -46,5 +59,4 @@
         redirect("../PAGINE/register.php");
 
     }
-
 ?>

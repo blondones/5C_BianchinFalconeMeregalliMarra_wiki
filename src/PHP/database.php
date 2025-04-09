@@ -30,6 +30,7 @@ class Database {
 
     //Adds a user to the DB
     public function addUser($email, $password, $ruolo) {
+        
         $stmt = $this->conn->prepare("INSERT INTO Utente (ID, Email, Password, Stato) VALUES (?, ?, ?, ?);");
         $state = 0;
         $stmt->bind_param("issi", $this->id, $password, $email, $state);

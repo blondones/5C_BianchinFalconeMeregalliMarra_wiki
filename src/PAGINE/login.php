@@ -1,3 +1,16 @@
+<?php
+    session_start();
+
+    function redirect($url) {
+        header('Location: '.$url);
+        die();
+    }
+
+    if (isset($_SESSION["user_id"])) { 
+        redirect("../PAGINE/areapersonale.php");
+    }
+?> 
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -11,19 +24,7 @@
     <!--NAVBAR-->
     <div id="navbar-container" data-navbar="navbar-empty"></div>
     
-    <?php
-        session_start();
-
-        function redirect($url) {
-            header('Location: '.$url);
-            die();
-        }
-
-        if (!isset($_SESSION["user_id"])) {
-            echo "Già loggato.."; 
-            redirect("../PAGINE/areapersonale.php");
-        } else {
-    ?>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 
     <!--LOGIN-->
     <div id="loginContainer">
@@ -39,7 +40,7 @@
     </div>
 
     <?php
-        }
+        
     ?>
 
     <script src="../JS/navbar.js"></script>

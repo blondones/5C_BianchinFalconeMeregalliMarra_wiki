@@ -1,3 +1,15 @@
+<?php 
+    session_start();     
+
+    function redirect($url) {
+        header('Location: '.$url);
+        die();
+    }
+
+    if (!isset($_SESSION["user_id"])) {
+        redirect("login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="it">
     <head>
@@ -7,19 +19,7 @@
         <link rel="stylesheet" href="../CSS/style.css">
     </head>
     <body>
-        <?php 
-            session_start();     
-
-
-            function redirect($url) {
-                header('Location: '.$url);
-                die();
-            }
-
-            if (isset($_SESSION["user_id"])) {
-                redirect("../PAGINE/login.php");
-            } else {
-        ?>
+        
 
         <!--NAVBAR-->
         <div id="navbar-container" data-navbar="navbar-logout-<?php echo $_SESSION["user_role"]; ?>"></div>
@@ -30,8 +30,5 @@
 
         <script src="../JS/navbar.js"></script>
 
-        <?php
-            }
-        ?>
     </body>
 </html>

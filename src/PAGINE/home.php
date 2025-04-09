@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div id="navbar-container" data-navbar="navbar-search"></div>
+    <div id="navbar-container" data-navbar="navbar-search-user"></div>
 
     
 

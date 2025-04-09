@@ -23,18 +23,31 @@
         //
         
         $err=false;
-        if(empty($_POST["email"]) || empty($_POST["password"])){
+        if(empty($_POST["email"]) || empty($_POST["password"])){ //Forse mettere controllo su $_POST["writer"]/$_POST["reviewer"]
             $err=true;
         }else{
             $email=test_input($_POST["email"]);
             $pwd=test_input($_POST["password"]);
+            $role = "";
+            if(isset($_POST["writer"])) {
+                $role = "writer";
+            } else {
+                $role = "reviewer";
+            }
         }
 
         if (!$err) {
             
             $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
+            $DB->addUser($email, $pwd, $role);
+            
+            echo "Registrazione inviata con successo!";
+            redirect("../PAGINE/home.php");
 
-            $result = $DB->addUser($email, $pwd, );
+        } else {
+            
+            echo "Input non valido..";
+            redirect("../PAGINE/register.php");
 
         }
 

@@ -19,7 +19,7 @@
             die();
         }
 
-        if (isset($_SESSION["user_id"])) {
+        if (!isset($_SESSION["user_id"])) {
             echo "Già loggato.."; 
             redirect("../PAGINE/areapersonale.php");
         } else {

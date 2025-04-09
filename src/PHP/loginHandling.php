@@ -52,18 +52,20 @@
             $result = $DB->checkUser($email, $pwd);
 
             if($result != false) {
-                $row = $result->fetch_assoc();  
-                $_SESSION["user_id"] = $row["ID"];
-                $_SESSION["user_role"] = $row["Ruolo"];
-                echo "Utente trovato.."; 
-                $DB->closeConnection();
-                redirect("../PAGINE/areapersonale.php"); 
+                if ($result["Stato"] == 1) {
+                    echo "Login effettuato..";
+                    $_SESSION["user_id"] = $result["ID"];
+                    $_SESSION["user_role"] = $result["Ruolo"];
+                    redirect("../PAGINE/areapersonale.php");
+                } else {
+                    echo "Utente non abilitato..";
+                    redirect("../PAGINE/login.php");
+                } 
             } else {
                 echo "Utente non trovato. Riprovare..";
                 $DB->closeConnection();
                 redirect("../PAGINE/login.php");
             }
-
         } else {
             echo "Input non valido..";
             redirect("../PAGINE/login.php");

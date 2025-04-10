@@ -17,7 +17,8 @@
             <p>Articolo N</p>
         </div>
         <div class="role-buttons">
-            <button>Check</button>
+            <button id="bottone">Check</button>
+            
         </div>
     </div>
     

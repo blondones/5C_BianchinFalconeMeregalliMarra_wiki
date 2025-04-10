@@ -74,12 +74,12 @@ class Database {
 
     //Get Articles
     public function getArticles($title) {
-        $stmt = $this->conn->prepare("SELECT * FROM bozza WHERE titolo = ?");
-        $allTitles = $title."*";
-        $stmt->bind_param("s", $allTitles);
+        $stmt = $this->conn->prepare("SELECT ID, ID_Utente, Data_Valutate, Data_Accettazione, Title, Abstract FROM Bozza WHERE Title LIKE ?");
+        $title = "%" . $title . "%"; // Aggiunge wildcard per corrispondenze parziali
+        $stmt->bind_param("s", $title);
         $stmt->execute();
         $result = $stmt->get_result();
-       
+    
         if ($result->num_rows > 0) {
             return $result;
         }

@@ -19,8 +19,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
     */
-    require_once 'database.php'; // Include la classe Database
 
+require_once 'config.php'; // Include il file config.php per le credenziali del database
+require_once 'database.php'; // Include la classe Database
 
 function test_input($data){
     $data = trim($data);
@@ -29,30 +30,27 @@ function test_input($data){
     return $data;
 }
 
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Verifica se il campo 'search' è stato inviato e non è vuoto
-    if(empty($_POST['search'])){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['search'])) {
         exit();
     } else {
         $testo = test_input($_POST['search']);
-       
-        // Connessione al database
-        $db = new Database($servername, $username, $password, $dbname); // Sostituisci con i tuoi parametri
+
+        $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
         $result = $db->getArticles($testo);
 
-
         if ($result) {
-            // Recupera i dati dell'articolo
-            $article = $result->fetch_assoc();
-            echo json_encode($article); // Restituisce i dati in formato JSON
+            $articles = [];
+            while ($row = $result->fetch_assoc()) {
+                $articles[] = $row;
+            }
+            echo json_encode($articles); // Restituisce i dati in formato JSON
         } else {
             echo json_encode(["error" => "Articolo non trovato"]);
         }
 
-
-        // Chiude la connessione al database
         $db->closeConnection();
     }
 }
 ?>
+

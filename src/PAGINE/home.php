@@ -30,40 +30,42 @@
     <script src="../JS/navbar.js"></script>
     <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const searchForm = document.querySelector("form"); // Seleziona il form della navbar
-    const searchInput = searchForm.querySelector("input[name='search']"); // Input del modulo
-    const articleContainer = document.getElementById("articleContainer"); // Contenitore per l'articolo
-
+    const searchForm = document.querySelector("form");
+    const searchInput = searchForm.querySelector("input[name='search']");
+    const articleContainer = document.getElementById("articleContainer");
 
     searchForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // Previene il comportamento predefinito del form
-
+        event.preventDefault();
 
         const searchValue = searchInput.value;
 
-
         fetch("../PHP/opzioniRicerca.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `search=${encodeURIComponent(searchValue)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                articleContainer.innerHTML = `<p>${data.error}</p>`;
-            } else {
-                articleContainer.innerHTML = `
-                    <h1>${data.titolo}</h1>
-                    <p>${data.contenuto}</p>
-                `;
-            }
-        })
-        .catch(error => {
-            console.error("Errore:", error);
-            articleContainer.innerHTML = `<p>Si è verificato un errore.</p>`;
-        });
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `search=${encodeURIComponent(searchValue)}`
+})
+.then(response => response.json())
+.then(data => {
+    console.log("JSON restituito:", data); // Logga il JSON nella console
+    if (data.error) {
+        articleContainer.innerHTML = `<p>${data.error}</p>`;
+    } else {
+        articleContainer.innerHTML = data.map(article => `
+            <h1>${article.Title}</h1>
+            <p>ID: ${article.ID}</p>
+            <p>ID Utente: ${article.ID_Utente}</p>
+            <p>Data Valutazione: ${article.Data_Valutate}</p>
+            <p>Data Accettazione: ${article.Data_Accettazione}</p>
+            <p>Abstract: ${article.Abstract}</p>
+        `).join('');
+    }
+})
+.catch(error => {
+    console.error("Errore:", error);
+    articleContainer.innerHTML = `<p>Si è verificato un errore.</p>`;
+});
     });
 });
 </script>

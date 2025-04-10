@@ -6,7 +6,7 @@ if ($conn->connect_error) {
     die("Errore di connessione: " . $conn->connect_error);
 }
 
-$id_utente = $_SESSION[$id_utente];
+$id_utente = 1;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = $_POST['title'] ?? '';

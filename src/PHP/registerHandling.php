@@ -49,7 +49,6 @@
     if (!$err) {
         
         $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
-
         $DB->addUser($email, $pwd, $role);
         
         redirect("../PAGINE/home.php");

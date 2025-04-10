@@ -5,7 +5,6 @@ class Database {
     //
     //  Vars
     //
-    private static $id = 2;
     private $conn;
 
     //
@@ -31,16 +30,15 @@ class Database {
     //Adds a user to the DB
     public function addUser($email, $password, $ruolo) {
         
-        $stmt = $this->conn->prepare("INSERT INTO Utente (ID, Email, Password, Stato) VALUES (?, ?, ?, ?);");
+        $stmt = $this->conn->prepare("INSERT INTO Utente (Email, Password, Stato) VALUES (?, ?, ?);");
         $state = 0;
-        $stmt->bind_param("issi", $this->id, $password, $email, $state);
+        $stmt->bind_param("ssi", $email, $password,  $state);
         $stmt->execute();
 
-        $stmt = $this->conn->prepare("INSERT INTO UtenteRuolo (ID_Utente, ID_Ruolo) VALUES (?, (SELECT Ruoli.ID FROM Ruoli WHERE Ruoli.Ruoli = ?));");
-        $stmt->bind_param("ii", $this->id, $ruolo);
+        $stmt = $this->conn->prepare("INSERT INTO UtenteRuolo (ID_Utente, ID_Ruolo) VALUES ((SELECT MAX(Utente.ID) FROM Utente), (SELECT Ruolo.ID FROM Ruolo WHERE Ruolo.Ruolo = ?));");
+        $stmt->bind_param("s", $ruolo);
         $stmt->execute();
         
-        $this->id+=1;
     }
 
     //Accept user

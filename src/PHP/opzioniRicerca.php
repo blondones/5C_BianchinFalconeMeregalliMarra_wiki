@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
 /*function test_input($data){
     $data = trim($data);
     $data = stripslashes($data);
@@ -45,8 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $articles[] = $row;
             }
             echo json_encode($articles); // Restituisce i dati in formato JSON
+            $_SESSION['lista_articoli'] = $articles; // Salva i dati nella sessione
         } else {
-            echo json_encode(["error" => "Articolo non trovato"]);
+            redirect('home.php');
         }
 
         $db->closeConnection();

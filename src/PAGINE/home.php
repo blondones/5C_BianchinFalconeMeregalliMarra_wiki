@@ -28,6 +28,12 @@
     <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
      
     <script src="../JS/navbar.js"></script>
+    <?php
+    
+    
+    ?>
+  
+    <!--
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     const searchForm = document.querySelector("form");
@@ -68,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
     });
 });
-</script>
+</script> --->
 
 
     <div id="articleContainer"></div> <!-- Contenitore per l'articolo -->

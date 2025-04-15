@@ -6,8 +6,13 @@
     }
     if($_SERVER["REQUEST_METHOD"]==="POST"){
         header("Location: ../PAGINE/home.php");
-    }
+        //qua viene messa la parte che si collega al db, prende il testo dalla bozza del database e lo inserisce all interno del nuovo articolo 
+        $db=new Database($SERVERNAME,$USERNAME,$PASSWORD,$DBNAME); //connessione al db fatta
+        
+        
 
+
+    }
 
 
 

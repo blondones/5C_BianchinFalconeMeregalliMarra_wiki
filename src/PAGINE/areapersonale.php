@@ -28,6 +28,16 @@
 
         <a href="../PHP/logout.php"> logout</a>
 
+        <?php
+        if ($_SESSION["user_role"] == "admin") {
+        ?>
+
+            <a href="admin_ruoliAccettare.php"> Richieste ruoli. </a>         
+
+        <?php
+        }
+        ?>
+
         <script src="../JS/navbar.js"></script>
 
     </body>

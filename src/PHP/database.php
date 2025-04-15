@@ -45,7 +45,17 @@ class Database {
     public function acceptUser() {
         
     }
-        
+    
+    //Get all disabled accounts
+    public function getDisabled() {
+        $result = $this->conn->query("SELECT * FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID = UtenteRuolo.ID_Ruolo WHERE Utente.Stato = 0;");
+
+        if ($result->num_rows >= 1) {
+            return $result;
+        }
+        return false;
+    }
+
     //Check if the user exists, and returns it's Roll and ID
     public function checkUser($email, $password) {
         $stmt = $this->conn->prepare("SELECT Utente.ID, Ruolo.Ruolo, Utente.Stato FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.Email = ? AND Utente.Password = ?");

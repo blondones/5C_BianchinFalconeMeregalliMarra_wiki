@@ -1,3 +1,19 @@
+<?php 
+    session_start();     
+
+    function redirect($url) {
+        header('Location: '.$url);
+        die();
+    }
+
+    if ($_SESSION["user_role"] != "admin") {
+        redirect("home.php");
+    }
+
+    require("../PHP/config.php");
+    require("../PHP/database.php");
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -8,19 +24,25 @@
 </head>
 <body>
     <!--NAVBAR-->
-    <div id="navbar-container" data-navbar="navbar-welcome"></div>
-
+    <div id="navbar-container" data-navbar="navbar-logout-admin"></div>
 
     <h1>Role acception</h1>
     <div class="role-container">
-        <div class="role-info">
-            <p><strong>Name:</strong> Pippo</p>
-            <p><strong>Role:</strong> writer</p>
-        </div>
-        <div class="role-buttons">
-            <button class="accept">Accept</button>
-            <button class="reject">Reject</button>
-        </div>
+        <?php
+            $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
+
+            $result = $DB->getDisabled();
+            if ($result != false) {
+                echo '<form action="accettazioneRuoli.php" method="POST">';
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr><td>Email: '.$row["Email"].'</td><td>Ruolo: '.$row["Ruolo"].'</td><td><label for="accetta'.$row["ID"].'">Accetta</label><input type="checkbox" id="accetta'.$row["ID"].'"></td><td><label for="rifiuta'.$row["ID"].'">Rifiuta</label><input type="checkbox" id="rifiuta'.$row["ID"].'"></td></tr>';
+                }
+                echo '<button type="submit">Submit</button>';
+                echo '</form>';
+            } else {
+                echo '<h3>Nessuna nuova richiesta</h3>';
+            }
+        ?>
     </div>
     
 

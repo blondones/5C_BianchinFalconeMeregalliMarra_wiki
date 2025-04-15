@@ -27,7 +27,6 @@
     <!-- Bottone Create New in basso al centro -->
     <div class="create-new-container">
         <form action="writerListaArticoli.php" method="POST">
-            <input type="hidden" name="action" value="create">
             <button type="submit">Create New</button>
         </form>
     </div>

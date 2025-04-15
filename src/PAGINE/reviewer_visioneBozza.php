@@ -24,9 +24,15 @@
     <br><br>
     
     <div class="button-container">
-        <button id="bottoneApprovazione" class="accept">Accept</button>
+        <form action="../PHP/reviewerApproveBozze.php" method="POST">
+            <button id="bottoneApprovazione" class="accept">Accept</button>
+        </form>
+        
         <span></span>
-        <button id="bottoneReject" class="reject">Reject</button>
+        <form action="../PHP/reviewerRejectBozze.php" method="POST">
+            <button id="bottoneReject" class="reject">Reject</button>
+        </form>
+        
     </div>
     
     <script src="../JS/navbar.js"></script>

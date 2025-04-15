@@ -16,9 +16,12 @@
         <div class="role-info">
             <p>Commit Name</p>
         </div>
-        <div class="role-buttons">
-            <button>Check</button>
-        </div>
+        <form action="../PHP/reviewerHandling.php" method="POST">
+            <div class="role-buttons">
+                <button id="bottoneReview">Check</button>
+            </div>
+        </form>
+            
     </div>
     
 

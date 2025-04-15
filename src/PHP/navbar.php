@@ -1,3 +1,4 @@
+
 <!--ADMIN-->
 
 <!-- Navbar con ricerca -->
@@ -11,8 +12,8 @@
             <li><a href="../PAGINE/login.php">Area Utente</a></li>
         </ul>
         <div class="user-area">
-            <form action="opzioniRicerca.php" method="POST">
-                <input type="text" id="search" name="search" placeholder="Search...">
+            <form method="POST" action="../PHP/opzioniRicerca.php" >
+                <input type="text" id="search" name="search" placeholder="Search..."> 
                 <button type="submit"><img src="../../data/search.png" alt=""></button>
             </form>
         </div>
@@ -119,7 +120,7 @@
             <li><a href="../PAGINE/login.php">Area Utente</a></li>
         </ul>
         <div class="user-area">
-            <form action="opzioniRicerca.php" method="POST">
+            <form action="../PHP/opzioniRicerca.php" method="POST">
                 <input type="text" id="search" name="search" placeholder="Search...">
                 <button type="submit"><img src="../../data/search.png" alt=""></button>
             </form>

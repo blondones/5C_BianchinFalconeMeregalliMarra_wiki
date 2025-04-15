@@ -1,20 +1,4 @@
 <!DOCTYPE html>
-<html lang="it">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Article</title>
-    <link rel="stylesheet" href="../CSS/style.css">
-</head>
-
-<body>
-    <!--NAVBAR-->
-    <div id="navbar-container" data-navbar="navbar-logout-<?php echo $_SESSION["user_role"]; ?>"></div>
-
-    <!DOCTYPE html>
-<html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,14 +28,6 @@
         <button class="btn">Done</button>
     </form>
 
-    <script src="../JS/navbar.js"></script>
-</body>
-
-</html>
-
-
-
-    
     <script src="../JS/navbar.js"></script>
 </body>
 

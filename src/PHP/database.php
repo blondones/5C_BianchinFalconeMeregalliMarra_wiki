@@ -99,6 +99,21 @@ class Database {
         }
         return false;
     }
+
+
+    public function getTesto($id) {
+        $stmt = $this->conn->prepare("SELECT Testo FROM Testo WHERE id LIKE ?");
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+        return false;
+    }
+
+
 }
 
 

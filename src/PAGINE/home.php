@@ -4,15 +4,15 @@ require_once '../PHP/database.php';
 
 $article = null;
 
-if (isset($_GET['article_id'])) {
-    $article_id = intval($_GET['article_id']);
+if (isset($_GET['idArticolo'])) {
+    $idArticolo = intval($_GET['idArticolo']);
 
     $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
     $conn = $db->getConnection();
 
     $stmt = $conn->prepare("SELECT Title, Abstract, Data_Valutate, Data_Accettazione, ID_Utente FROM Bozza WHERE ID = ?");
     if ($stmt) {
-        $stmt->bind_param("i", $article_id);
+        $stmt->bind_param("i", $idArticolo);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
@@ -28,11 +28,13 @@ if (isset($_GET['article_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <title>Home - Portale Articoli</title>
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
+
 <body>
 
     <div id="navbar-container" data-navbar="navbar-search-user"></div>
@@ -50,7 +52,7 @@ if (isset($_GET['article_id'])) {
     <hr>
 
     <div class="content-area">
-        <?php 
+        <?php
         if ($article) {
         ?>
             <div class="article-container">
@@ -64,34 +66,61 @@ if (isset($_GET['article_id'])) {
                 </div>
                 <a href="home.php" class="back-link">Torna alla ricerca</a>
             </div>
-        <?php 
+        <?php
         } else {
-                session_start();
-                $articoloContainer =<<<HTML
-                <div id="article-container">
-                    <h1 id="scrittaReviewEffettiva">I Varani: Giganti Antichi tra Mito e Natura</h1>
-                    <p id="testoReview1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat ullam vel ipsam excepturi quam ad, quae error omnis ea, aut repellat at voluptatem nam. Optio placeat natus quibusdam rem fuga.</p>
-                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id ="immagineVarano">
+            session_start();
 
-                    <br><br><br><br><br><br><br>
-                    <hr>
-                    <br><br><br>
+            // If we have a session article to display (just approved)
+            if (isset($_SESSION["articoloContainer"])) {
+                echo $_SESSION["articoloContainer"];
+                // You might want to unset it after displaying once
+                // unset($_SESSION["articoloContainer"]);
+            } else {
+                // Otherwise, fetch the most recently approved article
+                $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
+                $latestArticle = $db->getUltimoArticoloApprovato(); // Create this method
 
-                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id ="immagineVarano2">
-                    <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
-                    
-                </div>
-                HTML;
-                echo $articoloContainer;
-                //crea la variabile di sessione per l'articolo
-                $_SESSION["articoloContainer"] = $articoloContainer;
-                //viene fatto il salvataggio dell'articolo quindi adesso bisogna andare in reviewrer_approveBozze.php, riprendere 
-                //la session di aricoloContainer e cambiarne il contenuto con il testo della bozza accettata
-                //e poi fare il redirect alla home.php (possibilmente cambiandone l'articolo)
+                if ($latestArticle) {
+                    $title = htmlspecialchars($latestArticle['Title']);
+                    $abstract = nl2br(htmlspecialchars($latestArticle['Abstract']));
+                    $text = nl2br(htmlspecialchars($latestArticle['Text']));
+
+                    $articoloContainer = <<<HTML
+                                <div id="article-container">
+                                    <h1 id="scrittaReviewEffettiva">{$title}</h1>
+                                    <p id="testoReview1">{$abstract}</p>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id="immagineVarano">
+                                    <br><br><br><br><br><br><br>
+                                    <hr>
+                                    <br><br><br>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id="immagineVarano2">
+                                    <p id="testoReview2">{$text}</p>
+                                </div>
+                                HTML;
+
+                    echo $articoloContainer;
+                } else {
+                    // ritorno all articolo default
+                    $articoloContainer = <<<HTML
+                                <div id="article-container">
+                                    <h1 id="scrittaReviewEffettiva">I Varani: Giganti Antichi tra Mito e Natura</h1>
+                                    <p id="testoReview1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat ullam vel ipsam excepturi quam ad, quae error omnis ea, aut repellat at voluptatem nam. Optio placeat natus quibusdam rem fuga.</p>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id ="immagineVarano">
+                                    <br><br><br><br><br><br><br>
+                                    <hr>
+                                    <br><br><br>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id ="immagineVarano2">
+                                    <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
+                                </div>
+                                HTML;
+                    echo $articoloContainer;
+                }
+            }
         }
         ?>
     </div>
 
     <script src="../JS/navbar.js"></script>
 </body>
+
 </html>

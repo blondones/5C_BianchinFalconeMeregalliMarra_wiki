@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<td>" . nl2br($abstract_preview) . "</td>";
                     echo "<td>
                             <form class='action-form' method='GET' action='home.php'>
-                                <input type='hidden' name='article_id' value='" . htmlspecialchars($row['ID']) . "'>
+                                <input type='hidden' name='idArticolo' value='" . htmlspecialchars($row['ID']) . "'>
                                 <button type='submit'>Visualizza</button>
                             </form>
                           </td>";

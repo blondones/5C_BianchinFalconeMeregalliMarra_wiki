@@ -2,29 +2,38 @@
 require_once '../PHP/config.php';
 require_once '../PHP/database.php';
 
+// Inizializza $article a null o un valore di default
 $article = null;
 
+// Controlla se è stato passato un article_id via GET per visualizzare un articolo specifico
 if (isset($_GET['article_id'])) {
-    $article_id = intval($_GET['article_id']);
+    $article_id = intval($_GET['article_id']); // Assicura che sia un intero
 
+    // Crea l'oggetto Database e ottieni la connessione
     $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
-    $conn = $db->getConnection();
+    $conn = $db->getConnection(); // Assumendo che questo metodo restituisca la connessione mysqli
 
+    // Prepara la query per fetchare l'articolo specifico
+    // Assicurati che i nomi delle colonne (Title, Abstract, etc.) e della tabella (Bozza) siano corretti
     $stmt = $conn->prepare("SELECT Title, Abstract, Data_Valutate, Data_Accettazione, ID_Utente FROM Bozza WHERE ID = ?");
     if ($stmt) {
         $stmt->bind_param("i", $article_id);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $article = $result->fetch_assoc();
+            $article = $result->fetch_assoc(); // Prende i dati dell'articolo
         }
+        // else { $article rimane null, verrà mostrato il contenuto di default }
         $stmt->close();
     } else {
+        // Logga l'errore se la preparazione fallisce
         error_log("Errore prepare statement in home.php: (" . $conn->errno . ") " . $conn->error);
     }
 
+    // Chiudi la connessione al database
     $db->closeConnection();
 }
+// Se non c'è article_id, $article rimane null e verrà mostrato il contenuto di default
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -37,20 +46,13 @@ if (isset($_GET['article_id'])) {
 
     <div id="navbar-container" data-navbar="navbar-search-user"></div>
 
-    <h1>Portale Articoli</h1>
-
-    <div class="search-form-container">
-        <form method="POST" action="opzioniricerca.php">
-            <label for="search-input">Cerca Articolo per Titolo:</label>
-            <input type="text" id="search-input" name="search" placeholder="Inserisci titolo..." required>
-            <button type="submit">Cerca</button>
-        </form>
-    </div>
+    <h1>Home</h1>
 
     <hr>
 
     <div class="content-area">
-        <?php 
+        <?php
+        // Se è stato trovato un articolo specifico (tramite article_id)
         if ($article) {
         ?>
             <div class="article-container">
@@ -64,7 +66,8 @@ if (isset($_GET['article_id'])) {
                 </div>
                 <a href="home.php" class="back-link">Torna alla ricerca</a>
             </div>
-        <?php 
+        <?php
+        // Altrimenti, mostra il contenuto di default della home page
         } else {
         ?>
             <div>
@@ -79,7 +82,7 @@ if (isset($_GET['article_id'])) {
                 <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id ="immagineVarano2">
                 <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
             </div>
-        <?php 
+        <?php
         }
         ?>
     </div>

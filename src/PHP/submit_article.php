@@ -52,7 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
 
+                
                 echo "Bozza salvata con successo!";
+                echo '<form action="../PAGINE/writer_listaArticoli.php" method="get">
+                        <button type="submit">Torna alla lista delle bozze</button>
+                    </form>';
+
+
             } else {
                 echo "Errore durante l'associazione del testo alla bozza: " . $stmt_associar_testo->error;
             }

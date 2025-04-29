@@ -71,13 +71,9 @@ if (isset($_GET['idArticolo'])) {
         } else {
             session_start();
 
-            // If we have a session article to display (just approved)
             if (isset($_SESSION["articoloContainer"])) {
                 echo $_SESSION["articoloContainer"];
-                // You might want to unset it after displaying once
-                // unset($_SESSION["articoloContainer"]);
             } else {
-                // Otherwise, fetch the most recently approved article
                 $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
                 $latestArticle = $db->getUltimoArticoloApprovato(); // Create this method
 

@@ -83,18 +83,48 @@ class Database {
         return false;
     }
 
-
-
+    //Change Status of the user
+    public function changeUserStatus($bool, $id) {
+        if ($bool) {
+            $stmt = $this->conn->prepare("UPDATE wiki.Utente SET Utente.Stato = 1 WHERE Utente.ID = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        } else {
+            $stmt = $this->conn->prepare("UPDATE wiki.Utente SET Utente.Stato = 0 WHERE Utente.ID = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        }
+    }
 
     //Get Articles
     public function getArticles($title) {
         $stmt = $this->conn->prepare("SELECT ID, ID_Utente, Data_Valutate, Data_Accettazione, Title, Abstract FROM Bozza WHERE Title LIKE ?");
-        $title = "%" . $title . "%"; // Aggiunge wildcard per corrispondenze parziali
+        $title = "%" . $title . "%"; // Aggiunge wildcard per corrispondenze parziali //
         $stmt->bind_param("s", $title);
         $stmt->execute();
         $result = $stmt->get_result();
     
         if ($result->num_rows > 0) {
+            return $result;
+        }
+        return false;
+    }
+
+    //Get minimum ID
+    public function getMinUser() {
+        $result = $this->conn->query("SELECT MIN(Utente.ID) FROM Utente");
+
+        if ($result->num_rows >= 1) {
+            return $result;
+        }
+        return false;
+    }
+
+    //Get max ID
+    public function getMaxUser() {
+        $result = $this->conn->query("SELECT MAX(Utente.ID) FROM Utente");
+
+        if ($result->num_rows >= 1) {
             return $result;
         }
         return false;

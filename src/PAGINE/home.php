@@ -5,9 +5,8 @@ require_once '../PHP/database.php';
 // Inizializza $article a null o un valore di default
 $article = null;
 
-// Controlla se è stato passato un article_id via GET per visualizzare un articolo specifico
 if (isset($_GET['idArticolo'])) {
-    $idArticolo = intval($_GET['idArticolo']); // Assicura che sia un intero
+    $idArticolo = intval($_GET['idArticolo']);
 
     // Crea l'oggetto Database e ottieni la connessione
     $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
@@ -73,7 +72,9 @@ if (isset($_GET['idArticolo'])) {
 
             if (isset($_SESSION["articoloContainer"])) {
                 echo $_SESSION["articoloContainer"];
+                
             } else {
+                // Otherwise, fetch the most recently approved article
                 $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
                 $latestArticle = $db->getUltimoArticoloApprovato(); // Create this method
 
@@ -83,33 +84,33 @@ if (isset($_GET['idArticolo'])) {
                     $text = nl2br(htmlspecialchars($latestArticle['Text']));
 
                     $articoloContainer = <<<HTML
-            <div id="article-container">
-                <h1 id="scrittaReviewEffettiva">{$title}</h1>
-                <p id="testoReview1">{$abstract}</p>
-                <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id="immagineVarano">
-                <br><br><br><br><br><br><br>
-                <hr>
-                <br><br><br>
-                <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id="immagineVarano2">
-                <p id="testoReview2">{$text}</p>
-            </div>
-            HTML;
+                                <div id="article-container">
+                                    <h1 id="scrittaReviewEffettiva">{$title}</h1>
+                                    <p id="testoReview1">{$abstract}</p>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id="immagineVarano">
+                                    <br><br><br><br><br><br><br>
+                                    <hr>
+                                    <br><br><br>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id="immagineVarano2">
+                                    <p id="testoReview2">{$text}</p>
+                                </div>
+                                HTML;
 
                     echo $articoloContainer;
                 } else {
-                    // articolo default
+                    // ritorno all articolo default
                     $articoloContainer = <<<HTML
-            <div id="article-container">
-                <h1 id="scrittaReviewEffettiva">I Varani: Giganti Antichi tra Mito e Natura</h1>
-                <p id="testoReview1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat ullam vel ipsam excepturi quam ad, quae error omnis ea, aut repellat at voluptatem nam. Optio placeat natus quibusdam rem fuga.</p>
-                <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id ="immagineVarano">
-                <br><br><br><br><br><br><br>
-                <hr>
-                <br><br><br>
-                <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id ="immagineVarano2">
-                <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
-            </div>
-            HTML;
+                                <div id="article-container">
+                                    <h1 id="scrittaReviewEffettiva">I Varani: Giganti Antichi tra Mito e Natura</h1>
+                                    <p id="testoReview1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat ullam vel ipsam excepturi quam ad, quae error omnis ea, aut repellat at voluptatem nam. Optio placeat natus quibusdam rem fuga.</p>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano" id ="immagineVarano">
+                                    <br><br><br><br><br><br><br>
+                                    <hr>
+                                    <br><br><br>
+                                    <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id ="immagineVarano2">
+                                    <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
+                                </div>
+                                HTML;
                     echo $articoloContainer;
                 }
             }

@@ -28,7 +28,7 @@ class Database {
     //
 
 
-    //Close Connection to the DB
+    //chiude la connessione al DB
     public function closeConnection() {
         $this->conn->close();
     }
@@ -38,7 +38,7 @@ class Database {
     }
 
 
-    //Adds a user to the DB
+    //aggiunge un user al DB
     public function addUser($email, $password, $ruolo) {
        
         $stmt = $this->conn->prepare("INSERT INTO Utente (Email, Password, Stato) VALUES (?, ?, ?);");
@@ -54,12 +54,12 @@ class Database {
     }
 
 
-    //Accept user
+    //viene accettato l'utente
     public function acceptUser() {
        
     }
     
-    //Get all disabled accounts
+    //restituisce gli utenti con ll account disabilitato
     public function getDisabled() {
         $result = $this->conn->query("SELECT * FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID = UtenteRuolo.ID_Ruolo WHERE Utente.Stato = 0;");
 
@@ -69,7 +69,7 @@ class Database {
         return false;
     }
 
-    //Check if the user exists, and returns it's Roll and ID
+    //controlla se l utente esiste 
     public function checkUser($email, $password) {
         $stmt = $this->conn->prepare("SELECT Utente.ID, Ruolo.Ruolo, Utente.Stato FROM Utente JOIN UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente JOIN Ruolo ON Ruolo.ID= UtenteRuolo.ID_Ruolo WHERE Utente.Email = ? AND Utente.Password = ?");
         $stmt->bind_param("ss", $email, $password);
@@ -86,7 +86,7 @@ class Database {
 
 
 
-    //Get Articles
+    //ritorna gli articoli in base al titolo
     public function getArticles($title) {
         $stmt = $this->conn->prepare("SELECT ID, ID_Utente, Data_Valutate, Data_Accettazione, Title, Abstract FROM Bozza WHERE Title LIKE ?");
         $title = "%" . $title . "%"; // Aggiunge wildcard per corrispondenze parziali
@@ -99,6 +99,101 @@ class Database {
         }
         return false;
     }
+
+
+    public function getTesto($id) {
+        $stmt = $this->conn->prepare("SELECT Testo FROM Testo WHERE id LIKE ?");
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+        return false;
+    }
+    
+    // prende le bozze che sono ancora da vedere per la review
+public function getBozzeInAttesa() {
+    $stmt = $this->conn->prepare("
+        SELECT ID, Title, Abstract, ID_Utente 
+        FROM Bozza 
+        WHERE Data_Accettazione IS NULL AND Data_Rifiuto IS NULL");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        return $result;
+    }
+    return false;
+}
+
+// in base all'id della bozza, viene restituita la bozza
+public function getBozzaById($idBozza) {
+    $stmt = $this->conn->prepare("
+        SELECT b.ID, b.Title, b.Abstract, b.ID_Utente, t.Testo as Text
+        FROM Bozza b
+        JOIN TestoBozza tb ON b.ID = tb.ID_Bozza
+        JOIN Testo t ON tb.ID_Testo = t.ID
+        WHERE b.ID = ?");
+    $stmt->bind_param("i", $idBozza);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return false;
+}
+
+    // viene accettata la bozza
+    public function approveBozza($idBozza) {
+        $today = date("Y-m-d H:i:s");
+        $stmt = $this->conn->prepare("
+            UPDATE Bozza 
+            SET Data_Accettazione = ?, Data_Valutate = ?
+            WHERE ID = ?");
+        $stmt->bind_param("ssi", $today, $today, $idBozza);
+        return $stmt->execute();
+    }
+
+    // viene rifiutata la bozza
+    public function rejectBozza($idBozza) {
+        $today = date("Y-m-d H:i:s");
+        $stmt = $this->conn->prepare("
+            UPDATE Bozza 
+            SET Data_Rifiuto = ?, Data_Valutate = ?
+            WHERE ID = ?");
+        $stmt->bind_param("ssi", $today, $today, $idBozza);
+        return $stmt->execute();
+    }
+
+    // viene tolta la bozza dalla lista di attesa
+    public function removeBozzaFromAttesa($idBozza) {
+        // If you use the approve/reject methods above, this might not be necessary
+        return true;
+    }
+
+    // viene preso l'ultimo articolo approvato
+    public function getUltimoArticoloApprovato() {
+        $stmt = $this->conn->prepare("
+            SELECT b.ID, b.Title, b.Abstract, b.ID_Utente, t.Testo as Text
+            FROM Bozza b
+            JOIN TestoBozza tb ON b.ID = tb.ID_Bozza
+            JOIN Testo t ON tb.ID_Testo = t.ID
+            WHERE b.Data_Accettazione IS NOT NULL
+            ORDER BY b.Data_Accettazione DESC
+            LIMIT 1");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        return false;
+    }
+
+
 }
 
 

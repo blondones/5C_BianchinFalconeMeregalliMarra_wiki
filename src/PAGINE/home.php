@@ -6,8 +6,8 @@ require_once '../PHP/database.php';
 $article = null;
 
 // Controlla se è stato passato un article_id via GET per visualizzare un articolo specifico
-if (isset($_GET['article_id'])) {
-    $article_id = intval($_GET['article_id']); // Assicura che sia un intero
+if (isset($_GET['idArticolo'])) {
+    $idArticolo = intval($_GET['idArticolo']); // Assicura che sia un intero
 
     // Crea l'oggetto Database e ottieni la connessione
     $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
@@ -17,7 +17,7 @@ if (isset($_GET['article_id'])) {
     // Assicurati che i nomi delle colonne (Title, Abstract, etc.) e della tabella (Bozza) siano corretti
     $stmt = $conn->prepare("SELECT Title, Abstract, Data_Valutate, Data_Accettazione, ID_Utente FROM Bozza WHERE ID = ?");
     if ($stmt) {
-        $stmt->bind_param("i", $article_id);
+        $stmt->bind_param("i", $idArticolo);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
@@ -37,11 +37,13 @@ if (isset($_GET['article_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <title>Home - Portale Articoli</title>
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
+
 <body>
 
     <div id="navbar-container" data-navbar="navbar-search-user"></div>
@@ -51,8 +53,7 @@ if (isset($_GET['article_id'])) {
     <hr>
 
     <div class="content-area">
-        <?php
-        // Se è stato trovato un articolo specifico (tramite article_id)
+        <?php 
         if ($article) {
         ?>
             <div class="article-container">
@@ -66,8 +67,7 @@ if (isset($_GET['article_id'])) {
                 </div>
                 <a href="home.php" class="back-link">Torna alla ricerca</a>
             </div>
-        <?php
-        // Altrimenti, mostra il contenuto di default della home page
+        <?php 
         } else {
         ?>
             <div>
@@ -82,11 +82,12 @@ if (isset($_GET['article_id'])) {
                 <img src="https://www.gannett-cdn.com/authoring/2011/01/27/NCOU/ghows-DA-7f3cea74-5a72-4ac7-99f5-2add0ccea1e0-b7824ad2.jpeg?crop=1886,1066,x0,y0&width=2560" alt="immagineVarano2" id ="immagineVarano2">
                 <p id="testoReview2">Lorem vhnfkd,cbdfjkcvhnjrj,nvhkdnhjdchnsit amet consectetur adipisicing elit. Ipsum ratione dicta facilis deleniti in consequuntur laudantium consequatur quae. Unde animi voluptatum ad architecto nesciunt! Molestiae explicabo dicta eveniet cum perferendis.</p>
             </div>
-        <?php
+        <?php 
         }
         ?>
     </div>
 
     <script src="../JS/navbar.js"></script>
 </body>
+
 </html>

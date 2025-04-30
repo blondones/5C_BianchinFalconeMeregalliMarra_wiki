@@ -31,41 +31,10 @@
             <li><a href="../PAGINE/login.php">Area Utente</a></li>
         </ul>
         <div class="user-area">
-            <button>LogOut</button>
+            <a href="../PHP/logout.php">Logout</a>
         </div>
     </nav>
 </div>
-
-<!-- Navbar con Saluto -->
-<div id="navbar-welcome-admin" style="display: none;">
-    <nav class="navbar">
-        <div class="logo">WIKI</div>
-        <ul class="nav-links">
-        <li><a href="../PAGINE/home.php">Home</a></li>
-            <li><a href="../PAGINE/reviewer_listaBozze.php">Review</a></li>
-            <li><a href="#">Write</a></li>
-            <li><a href="../PAGINE/login.php">Area Utente</a></li>
-        </ul>
-        <div class="user-area">
-            <h3>Welcome <br> Back!!!</h3>
-        </div>
-    </nav>
-</div>
-
-
-<!-- Navbar vuota -->
-<div id="navbar-empty-admin" style="display: none;">
-    <nav class="navbar">
-        <div class="logo">WIKI</div>
-        <ul class="nav-links">
-        <li><a href="../PAGINE/home.php">Home</a></li>
-            <li><a href="../PAGINE/reviewer_listaBozze.php">Review</a></li>
-            <li><a href="#">Write</a></li>
-            <li><a href="../PAGINE/login.php">Area Utente</a></li>
-        </ul>
-    </nav>
-</div>
-
 
 <!-- Navbar Scrittore , reviewer no--> 
 <!-- Navbar con logOut -->
@@ -79,7 +48,7 @@
             <li><a href="../PAGINE/login.php">Area Utente</a></li>
         </ul>
         <div class="user-area">
-            <button>LogOut</button>
+            <a href="../PHP/logout.php">Logout</a>
         </div>
     </nav>
 </div>
@@ -98,7 +67,7 @@
             <li><a href="../PAGINE/login.php">Area Utente</a></li>
         </ul>
         <div class="user-area">
-            <button>LogOut</button>
+            <a href="../PHP/logout.php">Logout</a>
         </div>
     </nav>
 </div>

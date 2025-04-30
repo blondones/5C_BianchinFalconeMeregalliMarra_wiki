@@ -53,6 +53,13 @@ class Database {
        
     }
 
+    public function getAdmin() {
+        $result = $this->conn->query("SELECT * FROM wiki.Utente JOIN wiki.UtenteRuolo ON Utente.ID = UtenteRuolo.Utente_ID WHERE UtenteRuolo.Ruolo_ID = 3;");
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+    }
+
     public function deleteUser($id) {
         $stmt = $this->conn->prepare("DELETE FROM wiki.Utente WHERE Utente.ID = ?;");
         $stmt->bind_param("i", $id);

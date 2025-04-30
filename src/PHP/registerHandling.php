@@ -51,6 +51,11 @@
         $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
         $DB->addUser($email, $pwd, $role);
         
+        $adminInfo = $DB->getAdmin();
+        $msg = "Hello Admin!\n There's a new User that would like to help in making your wiki even better!\n For more information go check the request on our site.\n";
+        $msg = wordwrap($msg,70);
+        mail($adminInfo["Email"], "New request!", $msg);
+        
         redirect("../PAGINE/home.php");
 
     } else {

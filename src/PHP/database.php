@@ -54,7 +54,7 @@ class Database {
     }
 
     public function getAdmin() {
-        $result = $this->conn->query("SELECT * FROM wiki.Utente JOIN wiki.UtenteRuolo ON Utente.ID = UtenteRuolo.Utente_ID WHERE UtenteRuolo.Ruolo_ID = 3;");
+        $result = $this->conn->query("SELECT * FROM wiki.Utente JOIN wiki.UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente WHERE UtenteRuolo.ID_Ruolo = 3;");
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
         }

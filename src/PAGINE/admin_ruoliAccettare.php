@@ -32,10 +32,11 @@
             $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
 
             $result = $DB->getDisabled();
+
             if ($result != false) {
-                echo '<form action="accettazioneRuoli.php" method="POST">';
+                echo '<form action="../PHP/accettazioneRuoli.php" method="POST">';
                 while ($row = $result->fetch_assoc()) {
-                    echo '<tr><td>Email: '.$row["Email"].'</td><td>Ruolo: '.$row["Ruolo"].'</td><td><label for="accetta'.$row["ID"].'">Accetta</label><input type="checkbox" id="accetta'.$row["ID"].'"></td><td><label for="rifiuta'.$row["ID"].'">Rifiuta</label><input type="checkbox" id="rifiuta'.$row["ID"].'"></td></tr>';
+                    echo '<tr><td><strong>Email: </strong>'.$row["Email"]. '</td><br><td><strong> Ruolo: </strong>'.$row["Ruolo"]. ' </td><br><td><label for="accetta'.$row["ID_Utente"].'"><strong> Accetta: </strong></label><input type="checkbox" name="accetta'.$row["ID_Utente"].'" id="accetta'.$row["ID_Utente"].'"></td><td><label for="rifiuta'.$row["ID_Utente"].'"><strong> Rifiuta: </strong></label><input type="checkbox" name="rifiuta'.$row["ID_Utente"].'" id="rifiuta'.$row["ID_Utente"].'"></td></tr><br><br>';
                 }
                 echo '<button type="submit">Submit</button>';
                 echo '</form>';

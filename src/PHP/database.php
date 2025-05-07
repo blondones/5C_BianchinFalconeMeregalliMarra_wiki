@@ -53,10 +53,52 @@ class Database {
        
     }
 
+    public function getAdmin() {
+        $result = $this->conn->query("SELECT * FROM wiki.Utente JOIN wiki.UtenteRuolo ON Utente.ID = UtenteRuolo.Utente_ID WHERE UtenteRuolo.Ruolo_ID = 3;");
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+    }
 
-    //viene accettato l'utente
-    public function acceptUser() {
-       
+    public function deleteUser($id) {
+        $stmt = $this->conn->prepare("DELETE FROM wiki.Utente WHERE Utente.ID = ?;");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+    }
+
+    //Change Status of the user
+    public function changeUserStatus($bool, $id) {
+        if ($bool) {
+            $stmt = $this->conn->prepare("UPDATE wiki.Utente SET Utente.Stato = 1 WHERE Utente.ID = ?;");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        } else {
+            $stmt = $this->conn->prepare("UPDATE wiki.Utente SET Utente.Stato = 0 WHERE Utente.ID = ?;");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        }
+    }
+
+    //Get minimum ID
+    public function getMinUser() {
+        $result = $this->conn->query("SELECT MIN(Utente.ID) FROM Utente;");
+
+        if ($result->num_rows >= 1) {
+            $values = $result->fetch_assoc();
+            return $values["MIN(Utente.ID)"];
+        }
+        return false;
+    }
+
+    //Get max ID
+    public function getMaxUser() {
+        $result = $this->conn->query("SELECT MAX(Utente.ID) FROM Utente;");
+
+        if ($result->num_rows >= 1) {
+            $values = $result->fetch_assoc();
+            return $values["MAX(Utente.ID)"];
+        }
+        return false;
     }
     
     //restituisce gli utenti con ll account disabilitato

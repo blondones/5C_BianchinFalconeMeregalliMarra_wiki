@@ -19,9 +19,9 @@
             <input type="password" class="inputLogin" id="password" name="password" placeholder="Inserisci la tua password" required> <!-- inserimento password -->
             <input type="password" class="inputLogin" id="confermaPassword" placeholder="Conferma la tua password" required> <!-- conferma password -->
             <label for="writer" id="write">Writer: </label>
-            <input type="checkbox" class="inputLoginputLoginin" id="writer">
+            <input type="checkbox" class="inputLoginputLoginin" name="writer" id="writer">
             <label for="reviewer" id="write">Reviewer: </label>
-            <input type="checkbox" class="inputLogin" id="reviewer">
+            <input type="checkbox" class="inputLogin" name="reviewer" id="reviewer">
             <button id="submitRegister" type="submit">Submit</button>
         </form>
     </div>

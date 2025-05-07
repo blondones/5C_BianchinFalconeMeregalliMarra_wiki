@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modify Article</title>
+    <title>Modifica Articolo</title>
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
-
 <body>
     <div id="navbar-container" data-navbar="navbar-logout-WR"></div>
 
     <div class="container">
-        <label for="title">Title:</label>
-        <input type="text" id="title" placeholder="Text field in empty state">
-        
-        <label for="abstract">Abstract:</label>
-        <input type="text" id="abstract" placeholder="Text field in empty state">
-        
-        <label for="text">Text:</label>
-        <input type="text" id="text" placeholder="Text field in empty state">
-        
-        <label for="images">Images:</label>
-        <input type="text" id="images" placeholder="Text field in empty state">
-    </div>
+        <form action="../PHP/writerModificaArticolo.php" method="POST">
+            <label for="id">ID articolo:</label>
+            <input type="number" id="id" name="id" required>
 
-    <button class="btn">done</button>
+            <label for="title">Titolo:</label>
+            <input type="text" id="title" name="title" placeholder="Inserisci il titolo" required>
+
+            <label for="abstract">Abstract:</label>
+            <input type="text" id="abstract" name="abstract" placeholder="Inserisci l'abstract" required>
+
+            <label for="text">Testo:</label>
+            <textarea id="text" name="text" placeholder="Inserisci il testo completo" required></textarea>
+
+            <button type="submit" class="btn">Modifica</button>
+        </form>
+    </div>
 
     <script src="../JS/navbar.js"></script>
 </body>

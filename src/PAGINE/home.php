@@ -14,7 +14,11 @@ if (isset($_GET['idArticolo'])) {
 
     // Prepara la query per fetchare l'articolo specifico
     // Assicurati che i nomi delle colonne (Title, Abstract, etc.) e della tabella (Bozza) siano corretti
-    $stmt = $conn->prepare("SELECT Title, Abstract, Data_Valutate, Data_Accettazione, ID_Utente FROM Bozza WHERE ID = ?");
+    $stmt = $conn->prepare("SELECT b.Title, b.Abstract, b.Data_Valutate, b.Data_Accettazione, b.ID_Utente, i.URL
+    FROM Bozza b
+    LEFT JOIN ImmaginiBozza ib ON b.ID = ib.ID_Bozza
+    LEFT JOIN Immagini i ON i.ID = ib.ID_Immagine
+    WHERE b.ID = ?");
     if ($stmt) {
         $stmt->bind_param("i", $idArticolo);
         $stmt->execute();
@@ -57,14 +61,22 @@ if (isset($_GET['idArticolo'])) {
         ?>
             <div class="article-container">
                 <h2><?php echo htmlspecialchars($article['Title']); ?></h2>
-                <p><strong>ID Utente:</strong> <?php echo htmlspecialchars($article['ID_Utente']); ?></p>
                 <p><strong>Data Valutazione:</strong> <?php echo htmlspecialchars($article['Data_Valutate'] ?? 'Non disponibile'); ?></p>
                 <p><strong>Data Accettazione:</strong> <?php echo htmlspecialchars($article['Data_Accettazione'] ?? 'Non disponibile'); ?></p>
                 <div>
-                    <h3>Abstract</h3>
-                    <p><?php echo nl2br(htmlspecialchars($article['Abstract'])); ?></p>
+                    <h3>Contenuto</h3>
+                    <?php
+                $abstract = htmlspecialchars($article['Abstract']);
+                $abstract = str_replace("/N", "</p><p>", $abstract);
+                echo "<p>$abstract</p>";
+?>
                 </div>
-                <a href="home.php" class="back-link">Torna alla ricerca</a>
+                <?php if (!empty($article['URL'])): ?>
+    <div class="article-image">
+        <img src="<?php echo htmlspecialchars($article['URL']); ?>" alt="Immagine articolo" style="max-width: 100%; height: auto; border-radius: 12px; margin: 1em 0;">
+    </div>
+<?php endif; ?>
+                <a href="home.php" class="back-link">Torna alla home</a>
             </div>
         <?php
         } else {

@@ -88,8 +88,12 @@ class Database {
 
     //ritorna gli articoli in base al titolo
     public function getArticles($title) {
-        $stmt = $this->conn->prepare("SELECT ID, ID_Utente, Data_Valutate, Data_Accettazione, Title, Abstract FROM Bozza WHERE Title LIKE ?");
-        $title = "%" . $title . "%"; // Aggiunge wildcard per corrispondenze parziali
+        $stmt = $this->conn->prepare("SELECT Bozza.ID, Bozza.ID_Utente, Bozza.Data_Valutate, Bozza.Data_Accettazione, Bozza.Title, Bozza.Abstract, Immagini.URL 
+            FROM Bozza 
+            JOIN ImmaginiBozza ON ImmaginiBozza.ID_Bozza = Bozza.ID 
+            JOIN Immagini ON Immagini.ID = ImmaginiBozza.ID_Immagine 
+            WHERE Bozza.Title LIKE ?");
+        $title = "%" . $title . "%"; // Wildcard per la ricerca
         $stmt->bind_param("s", $title);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -99,6 +103,7 @@ class Database {
         }
         return false;
     }
+    
 
 
     public function getTesto($id) {

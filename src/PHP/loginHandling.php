@@ -42,6 +42,7 @@
     // Check Credentials
     //
 
+    
     if (!$err) {
 
         $DB = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
@@ -62,5 +63,8 @@
     } else {
         redirect("../PAGINE/login.php");
     }
+        
+       
+        
 
 ?>

@@ -40,18 +40,35 @@ class Database {
 
     //aggiunge un user al DB
     public function addUser($email, $password, $ruolo) {
-       
+        // Controlla se esiste già un utente con la stessa email
+        $checkStmt = $this->conn->prepare("SELECT ID FROM Utente WHERE Email = ?");
+        $checkStmt->bind_param("s", $email);
+        $checkStmt->execute();
+        $checkStmt->store_result();
+        
+        if ($checkStmt->num_rows > 0) {
+            return false; // Email già usata
+        }
+    
+        // Aggiunge nuovo utente
         $stmt = $this->conn->prepare("INSERT INTO Utente (Email, Password, Stato) VALUES (?, ?, ?);");
         $state = 0;
         $stmt->bind_param("ssi", $email, $password,  $state);
-        $stmt->execute();
-
-
-        $stmt = $this->conn->prepare("INSERT INTO UtenteRuolo (ID_Utente, ID_Ruolo) VALUES ((SELECT MAX(Utente.ID) FROM Utente), (SELECT Ruolo.ID FROM Ruolo WHERE Ruolo.Ruolo = ?));");
+        if (!$stmt->execute()) {
+            return false; // Errore durante inserimento
+        }
+    
+        // Associa ruolo
+        $stmt = $this->conn->prepare("INSERT INTO UtenteRuolo (ID_Utente, ID_Ruolo) VALUES ((SELECT MAX(Utente.ID) FROM Utente), (SELECT ID FROM Ruolo WHERE Ruolo = ?));");
         $stmt->bind_param("s", $ruolo);
-        $stmt->execute();
-       
+        if (!$stmt->execute()) {
+            return false; // Errore durante inserimento ruolo
+        }
+    
+        return true;
     }
+    
+    
 
     public function getAdmin() {
         $result = $this->conn->query("SELECT * FROM wiki.Utente JOIN wiki.UtenteRuolo ON Utente.ID = UtenteRuolo.ID_Utente WHERE UtenteRuolo.ID_Ruolo = 3;");
@@ -109,6 +126,14 @@ class Database {
             return $result;
         }
         return false;
+    }
+
+    public function emailExists($email) {
+        $stmt = $this->conn->prepare("SELECT ID FROM Utente WHERE Email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
     }
 
     //controlla se l utente esiste 

@@ -1,20 +1,15 @@
-<!-- listaArticoliBozze.php -->
 <?php
 require_once '../PHP/database.php';
 require_once '../PHP/config.php';
 
 $db = new Database($SERVERNAME, $USERNAME, $PASSWORD, $DBNAME);
-$conn = $db->getConnection();
-
 $articoli = [];
 $result = $db->getArticles("");
-
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         $articoli[] = $row;
     }
 }
-
 $db->closeConnection();
 ?>
 
@@ -27,7 +22,7 @@ $db->closeConnection();
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
-    <div id="navbar-container" data-navbar="navbar-logout-WR"></div>
+    <div id="navbar-container" data-navbar="navbar-logout-writer"></div>
 
     <h1>Lista delle Bozze</h1>
 
@@ -40,29 +35,35 @@ $db->closeConnection();
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($articoli)): ?>
-                <?php foreach ($articoli as $articolo): ?>
+            <?php
+            if (!empty($articoli)) {
+                foreach ($articoli as $articolo) {
+            ?>
                     <tr>
-                        <td><?= htmlspecialchars($articolo['ID']) ?></td>
-                        <td><?= htmlspecialchars($articolo['Title']) ?></td>
+                        <td><?php echo htmlspecialchars($articolo['ID']); ?></td>
+                        <td><?php echo htmlspecialchars($articolo['Title']); ?></td>
                         <td>
-                            <form action="writerListaArticoli.php" method="POST" style="display:inline;">
-                                <input type="hidden" name="articoloN" value="<?= $articolo['ID'] ?>">
-                                <button type="submit" name="action" value="modify">Modifica</button>
+                            <form action="writer_modificaArticolo.php" method="GET" style="display:inline;">
+                                <input type="hidden" name="idArticolo" value="<?php echo $articolo['ID']; ?>">
+                                <button type="submit">Modifica</button>
                             </form>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+            <?php
+                } // end foreach
+            } else {
+            ?>
                 <tr>
                     <td colspan="3">Nessuna bozza trovata.</td>
                 </tr>
-            <?php endif; ?>
+            <?php
+            } // end if
+            ?>
         </tbody>
     </table>
 
     <div class="create-new-container">
-        <form action="../PAGINE/writer_creazioneArticolo.php" method="POST">
+        <form action="writer_creazioneArticolo.php" method="GET">
             <button type="submit">Crea Nuovo</button>
         </form>
     </div>
